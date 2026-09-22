@@ -1,11 +1,11 @@
 import random
 
 from AlfabetoProbs import obtener_alfabeto, obtener_probabilidades
-from obtenerMatriz_Memoria import obtener_matrizTrans_porColumnas, tiene_memoria, imprime_matriz
+from Matriz_Memoria import obtener_matrizTrans_porColumnas, tiene_memoria, imprime_matriz
 from FuenteConMemoria import calcular_entropia_fuenteConMem_porColumnas, vector_estacionario_porColumnas
 from FuenteSinMemoria import extiende, calcula_entropiaSinMem
 
-cad = ";;,;,;:,,,.;,,.,,,::,;;;,:;.,,;:,,,:..;,;;.,;,,.:;"
+cad = "-+-+*//++///*/-////+---////-+/+--+-+/-/+-+/-+*++//"
 
 alfabeto = obtener_alfabeto(cad)
 probabilidades = obtener_probabilidades(alfabeto, cad)
@@ -29,12 +29,12 @@ else:
     extiende(n,alfabeto,probabilidades,sext,pext)
     entropia = calcula_entropiaSinMem(probabilidades)
     print("es de memoria nula, entropia: ", entropia)
-    print(sext)
-    print(pext)
+    print("Alf ext:", sext)
+    print("Prob ext: ", pext)
     print("entropia extendida: ", n*entropia)
 
 
-#Para empezar, el alfabeto y las probabilidades se obtuvieron con una función que recorre el mensaje emitido por la fuente. Al recorrer, se pregunta si el caracter recorrido está en la lista de caracteres inicializada como una lista vacía. Si la respuesta es sí, en el mismo índice en el que ya se encuentra el caracter se le suma 1 a la lista de probabilidades también inicializada como una lista vacía. En cambio, si no estaba en la lista de caracteres, se agrega el caracter en cuestión a la lista de alfabeto y se le agregaba un 1 a la lista de probabilidades. Al finalizar, a todos los elementos de la lista de probabilidades se los divide por la longitud de la cadena.
+#El alfabeto y las probabilidades independientes se obtuvieron con una función que recorre el mensaje emitido por la fuente. Al recorrer, se pregunta si el caracter recorrido está en la lista de caracteres inicializada como una lista vacía. Si la respuesta es sí, en el mismo índice en el que ya se encuentra el caracter se le suma 1 a la lista de probabilidades también inicializada como una lista vacía. En cambio, si no estaba en la lista de caracteres, se agrega el caracter en cuestión a la lista de alfabeto y se le agregaba un 1 a la lista de probabilidades. Al finalizar, a todos los elementos de la lista de probabilidades se los divide por la longitud de la cadena.
 #En cuanto a la matriz de transición, Primero obtengo el alfabeto de la misma forma que hice anteriormente. Luego, creé una matriz cuadrada de ceros de nxn siendo n la cantidad de caracteres que contiene el alfabeto. Después, al recorrer el mensaje, iba tomando de a 2 caracteres. Buscaba el primer caracter entre las columnas y el segundo caracter en las filas para sumar 1 en la celda. Finalmente, normalicé las matrices por columnas.
 #para determinar si hay memoria tenés que verificar si las probabilidades de un mismo destino cambian según el origen.
 #para ello recorro cada fila y obtengo su maximo y su minimo, luego obtengo la diferencia. Si para algun simbolo la diferencia es mayor a la tolerancia, la fuente tiene memoria

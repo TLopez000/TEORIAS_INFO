@@ -1,6 +1,6 @@
 import math
 
-#La función primero obtiene la cantidad de símbolos del alfabeto y crea una matriz de conteos inicializada en cero. 
+#La función primero obtiene la n cantidad de símbolos del alfabeto y crea una matriz nxn de conteos inicializada en cero. 
 # Luego recorre el mensaje de a pares consecutivos, identificando el símbolo actual como origen (columna) y el siguiente como destino (fila), 
 # e incrementa el contador de esa transición. Finalmente, recorre cada columna, calcula el total de transiciones que salen de ese símbolo y 
 # divide cada contador por ese total para obtener las probabilidades. Así se obtiene una matriz de transición por columnas, donde cada columna 

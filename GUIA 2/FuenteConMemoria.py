@@ -17,7 +17,7 @@ def vector_estacionario_porColumnas(MT):
 
     # Reemplazamos una ecuación por:
     # v1 + v2 + ... + vn = 1
-    A[-1] = [1] * n
+    A[n-1] = [1] * n
     b = [0] * (n - 1) + [1]
 
     # Eliminación
@@ -43,9 +43,10 @@ def vector_estacionario_porColumnas(MT):
 
     return v
 
-#Se construye M-I y se plantea el sistema (M-I)*V = 0 Como este sistema es indeterminado, 
-#se reemplaza una de sus ecuaciones por la condición SUM v[i] = 1. Luego se resuelve el sistema 
-#para obtener el vector estacionario.
+#Se aplica M*V = V. Primero construyo en la matriz A construyo M-I (se resta 1 a la diagonal) y se plantea el sistema (M-I)*V = 0 
+#Como este sistema es indeterminado, se reemplaza en A una de sus ecuaciones (su ultima fila) por la condición de normalizacion v1 + v2 + ... + vn = 1 (la ultima fila).
+#Al vector de terminos independientes b se le asigna 0 en todas sus posiciones salvo en la ultima que se le asigna 1. Hasta aca se planteo A*V = b.
+# Luego se resuelve el sistema por eliminación gaussiana para obtener el vector estacionario.
 
 
 def calcular_entropia_fuenteConMem_porColumnas(vecEst, MatrizTrans):
