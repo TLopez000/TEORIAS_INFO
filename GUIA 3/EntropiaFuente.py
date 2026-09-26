@@ -1,12 +1,12 @@
 from AlfabetoProbsKraft_Codigos import obtener_longitudes_codigo
-from math import log
+import math
 
 def calcula_entropia_baseR(r: int, probabilidades: list[float]):
     
     entropia = 0
     for i in range(len(probabilidades)):
         if (probabilidades[i] > 0):
-            entropia += probabilidades[i] * log(1/probabilidades[i], r)
+            entropia += probabilidades[i] * math.log(1/probabilidades[i], r)
 
     return entropia
 

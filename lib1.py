@@ -19,6 +19,14 @@ def obtener_probabilidades(alfabeto, mensaje):
         
     return probabilidades    
 
+def calcula_cantInfo(prob):
+    if (prob > 0):
+        cantInfo = math.log2(1/prob)
+    else:
+        cantInfo = 1
+        
+    return cantInfo
+
 #FUNCIONES PARA FUENTES SIN MEMORIA
 
 def calcula_entropiaSinMem(probabilidades):
@@ -46,9 +54,6 @@ def extiende(n: int, s: list[str], p: list[float], sext:list[str], pext: list[fl
 
         combinaciones = nuevas_comb
         probabilidades = nuevas_prob
-
-    sext.clear()
-    pext.clear()
 
     sext.extend(combinaciones)
     pext.extend(probabilidades)
@@ -196,7 +201,7 @@ def calcular_entropia_fuenteConMem_porColumnas(vecEst, MatrizTrans):
     return entropia_total
 
 
-#RESOLUCION EJERCICIO
+#RESOLUCION EJERCICIOS
 
 
 cad = "-+-+*//++///*/-////+---////-+/+--+-+/-/+-+/-+*++//"
@@ -210,19 +215,28 @@ imprime_matriz(alfabeto,matriz)
 print()
 print("Alfabeto: ", alfabeto)
 print("Probabilidades: ", probabilidades)
+print()
 
 if (tiene_memoria(matriz, 0.05)):
+    print("FUENTE CON MEMORIA")
     vecEst = vector_estacionario_porColumnas(matriz)
     print("vecEst: ", vecEst)
     entropia = calcular_entropia_fuenteConMem_porColumnas(vecEst, matriz)
-    print("tiene memoria, entropia: ", entropia)
+    print("ENTROPIA: ", entropia)
 else:
+    print("FUENTE SIN MEMORIA")
+    entropia = calcula_entropiaSinMem(probabilidades)
+    print("ENTROPIA: ", entropia)
+
+    cadenaN = genera_cadenaN_SinMemoria(3,alfabeto,probabilidades)
+    print("CADENA N: ", cadenaN)
+
+    #Extension n
     sext = []
     pext = []
     n = 2
     extiende(n,alfabeto,probabilidades,sext,pext)
-    entropia = calcula_entropiaSinMem(probabilidades)
-    print("es de memoria nula, entropia: ", entropia)
     print("Alf ext:", sext)
     print("Prob ext: ", pext)
-    print("entropia extendida: ", n*entropia)
+    entropiaext = calcula_entropiaSinMem(pext) # o tambien entropiaext = n*entropia
+    print("ENTROPIA EXTENDIDA: ", entropiaext)

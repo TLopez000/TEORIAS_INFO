@@ -3,10 +3,15 @@ Luego para la probabilidad independiente, se inicializa una lista vacia, y luego
 
 El calculo de la entropia sin memoria se realiza recorriendo la lista de probabilidades y acumulando prob * log2(1/prob) en cada iteracion.
 
-Para la extension N de la fuente sin memoria se comienza con una lista vacía de combinaciones de probabilidad 1. En cada iteración agrega un símbolo a las combinaciones existentes y calcula su probabilidad multiplicando la probabilidad anterior 
-por la del nuevo símbolo. Al final, guarda las secuencias en sext y sus probabilidades correspondientes en pext.
+Para calcular la cantidad de informacion de un simbolo, se pasa la probabilidad y la funcion retorna 
 
-Para generar una cadena N, random.choices elije una lista de valores del alfabeto, ponderadas por sus probabilidades (con el [0] tomamos el primer valor de la lista)
+Para generar la extension N de la fuente sin memoria se comienza con dos listas auxiliares: una lista vacía de combinaciones y otra lista de probabilidades inicializada en 1. 
+En cada iteración (son N iteraciones, el primer ciclo For), con el segundo For, recorro cada combinacion existente y con el tercer For, se añade un simbolo del alfabeto a la combinacion actual y calcula su nueva probabilidad multiplicando la probabilidad anterior 
+por la del nuevo símbolo, al finalizar el 3er For obtuve todas las posibles combinaciones para la combinacion i guardades en nuevas_comb y nuevas_prob, por lo que paso a la siguiente combinacion.
+Una vez recorridas todas las combinaciones, guardo las combinaciones y sus probabilidades en las listas auxiliares.
+Finalizado el primer ciclo For, las combinaciones obtenidas en las listas auxiliares seran de tamaño N y las guardo en las listas sext y pext.
+
+Para generar una cadena N aleatoria, random.choices elije una lista de valores del alfabeto, ponderadas por sus probabilidades (con el [0] tomamos el primer valor de la lista)
 
 La función para obtener la matriz de transicion primero obtiene la n cantidad de símbolos del alfabeto y crea una matriz nxn de conteos inicializada en cero. 
 Luego recorre el mensaje de a pares consecutivos, identificando el símbolo actual como origen (columna) y el siguiente como destino (fila), e incrementa el contador de esa transición. 
@@ -17,7 +22,7 @@ Para saber si una fuente tiene memoria, la funcion compara para cada fila su min
 
 Para obtener el vector estacionario de la fuente Markoviana, se aplica M*V = V:
 n representa la cantidad de estados de la matriz. 
-Se construye en la variable A, M - I:
+Se construye en la variable A, la matriz M - I:
 -i recorre las filas y j las columnas; si i == j estamos en la diagonal,
 -por lo que se resta 1 a MT[i][j], y en caso contrario se copia el valor original. 
 Luego se reemplaza la última fila A[n-1] por [1,...,1] por la condición de normalización v1 + v2 + ... + vn = 1.
