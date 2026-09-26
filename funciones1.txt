@@ -1,5 +1,5 @@
 Para obtener el alfabeto, se inicializa una lista vacia y se recorre el mensaje añadiendo cada simbolo que no se encuentre en la lista.
-Luego para la probabilidad independiente, se inicializa una lista vacia, y luego para cada simbolo del alfabeto se cuenta la cantidad de veces que aparece en el mensaje y se divide por el largo del mensaje, guardando le valor en la lista.
+Luego para obtener la probabilidad independiente, se inicializa una lista vacia, y luego para cada simbolo del alfabeto se cuenta la cantidad de veces que aparece en el mensaje y se divide por el largo del mensaje, guardando le valor en la lista.
 
 El calculo de la entropia sin memoria se realiza recorriendo la lista de probabilidades y acumulando prob * log2(1/prob) en cada iteracion.
 
@@ -38,3 +38,12 @@ H(S|Sj) = sum_i P(Si|Sj) * log2(1/P(Si|Sj)).
 Luego, esta entropía condicional se pondera por la probabilidad estacionaria del símbolo de origen Sj (vecEst[j]).
 Finalmente, las entropías ponderadas se van acumulando para obtener la entropía de la fuente con memoria:
 H = sum_j P(Sj) * H(S|Sj).
+
+PARA CONCLUSIONES DESCRIBIR: 
+Ranking de probabilidades de cada simbolo (el + probable es el que menos informacion aporta)
+Como se ve en la matriz si tiene memoria o no:
+(si las columnas son iguales y se parecen a las probabilidades calculadas, la aparicion de un simbolo es estadisticamente independiente del caracter emitido anteriormente)
+La entropia, (su informacion media por simbolo)
+Si tiene memoria, despues de mucho tiempo las probabilidades de cada caracter son las del vector estacionario calculado
+Para la extension su entropia y sus combinaciones (que simbolosd an mas informacion )
+
