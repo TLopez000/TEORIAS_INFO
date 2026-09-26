@@ -1,9 +1,9 @@
-from math import log2
+import math
 
 def calcula_entropiaSinMem(probabilidades):
     entropia = 0
     for prob in probabilidades:
-        entropia += prob * log2(1/prob)
+        entropia += prob * math.log2(1/prob)
     return entropia
 
 # Entropia de fuente sin memoria = sumatoria de prob * log2(1/prob) para todo simbolo

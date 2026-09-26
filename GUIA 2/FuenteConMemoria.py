@@ -1,4 +1,3 @@
-import random
 import math
 
 def vector_estacionario_porColumnas(MT):
@@ -58,7 +57,7 @@ def calcular_entropia_fuenteConMem_porColumnas(vecEst, MatrizTrans):
     for j in range(n):
         entropia_condicional = 0.0
 
-        # Recorremos sus probabilidades condicionales
+        # Recorremos las probabilidades condicionales i
         for i in range(n):
             p = MatrizTrans[i][j]
 

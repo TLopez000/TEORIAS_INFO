@@ -1,0 +1,35 @@
+Para obtener el alfabeto, se inicializa una lista vacia y se recorre el mensaje añadiendo cada simbolo que no se encuentre en la lista.
+Luego para la probabilidad independiente, se inicializa una lista vacia, y luego para cada simbolo del alfabeto se cuenta la cantidad de veces que aparece en el mensaje y se divide por el largo del mensaje, guardando le valor en la lista.
+
+El calculo de la entropia sin memoria se realiza recorriendo la lista de probabilidades y acumulando prob * log2(1/prob) en cada iteracion.
+
+Para la extension N de la fuente sin memoria se comienza con una lista vacía de combinaciones de probabilidad 1. En cada iteración agrega un símbolo a las combinaciones existentes y calcula su probabilidad multiplicando la probabilidad anterior 
+por la del nuevo símbolo. Al final, guarda las secuencias en sext y sus probabilidades correspondientes en pext.
+
+Para generar una cadena N, random.choices elije una lista de valores del alfabeto, ponderadas por sus probabilidades (con el [0] tomamos el primer valor de la lista)
+
+La función para obtener la matriz de transicion primero obtiene la n cantidad de símbolos del alfabeto y crea una matriz nxn de conteos inicializada en cero. 
+Luego recorre el mensaje de a pares consecutivos, identificando el símbolo actual como origen (columna) y el siguiente como destino (fila), e incrementa el contador de esa transición. 
+Finalmente, recorre cada columna, calcula el total de transiciones que salen de ese símbolo y divide cada contador por ese total para obtener las probabilidades. 
+Así se obtiene una matriz de transición por columnas, donde cada columna representa las probabilidades de pasar desde un símbolo de origen hacia los distintos destinos.
+
+Para saber si una fuente tiene memoria, la funcion compara para cada fila su minimo con su maximo, si para algún simbolo la diferencia va más allá de la tolerancia (0,05), la aparición de este depende de la secuencia anterior y la fuente tiene memoria.
+
+Para obtener el vector estacionario de la fuente Markoviana, se aplica M*V = V:
+n representa la cantidad de estados de la matriz. 
+Se construye en la variable A, M - I:
+-i recorre las filas y j las columnas; si i == j estamos en la diagonal,
+-por lo que se resta 1 a MT[i][j], y en caso contrario se copia el valor original. 
+Luego se reemplaza la última fila A[n-1] por [1,...,1] por la condición de normalización v1 + v2 + ... + vn = 1.
+El vector b tiene 0 en las primeras n-1 posiciones y 1 en la última, por lo que queda planteado el sistema A·V = b. 
+Después se realiza eliminación gaussiana:
+-i indica la fila pivote, j las filas inferiores que se modifican y k recorre las columnas para actualizar cada elemento. 
+Finalmente, se hace sustitución hacia atrás:
+-i recorre las filas desde la última hasta la primera, j recorre las posiciones ya calculadas de V y se obtiene cada v[i]. 
+El vector V resultante es el vector estacionario.
+
+Para el calculo de la entropia de la fuente de Markov,  se recorre cada símbolo de origen (columna j) y se calcula la entropía condicional asociada a dicho símbolo:
+H(S|Sj) = sum_i P(Si|Sj) * log2(1/P(Si|Sj)).
+Luego, esta entropía condicional se pondera por la probabilidad estacionaria del símbolo de origen Sj (vecEst[j]).
+Finalmente, las entropías ponderadas se van acumulando para obtener la entropía de la fuente con memoria:
+H = sum_j P(Sj) * H(S|Sj).

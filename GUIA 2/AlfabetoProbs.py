@@ -1,6 +1,6 @@
-from math import log2
+import math
 
-def obtener_alfabeto(mensaje):
+def obtener_alfabeto(mensaje: list[str]):
     alfabeto = [] 
 
     for simbolo in mensaje: 
@@ -11,7 +11,7 @@ def obtener_alfabeto(mensaje):
 
 #Se recorre el mensaje y se añade cada simbolo que no se encuentre en el alfabeto.
 
-def obtener_probabilidades(alfabeto, mensaje):
+def obtener_probabilidades(alfabeto: list[str], mensaje: list[str]):
     probabilidades = []
     
     for simbolo in alfabeto:
@@ -25,7 +25,7 @@ def obtener_probabilidades(alfabeto, mensaje):
 
 def calcula_cantInfo(prob):
     if (prob > 0):
-        cantInfo = log2(1/prob)
+        cantInfo = math.log2(1/prob)
     else:
         cantInfo = 1
         
