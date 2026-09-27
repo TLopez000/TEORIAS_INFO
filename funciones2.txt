@@ -17,6 +17,7 @@ Si aparece el sufijo vacío (""), significa que hay una ambigüedad en la decodi
 Entonces unideco pasa a False, al volver a evaluar la condición del while, el ciclo termina porque unideco ya no es True, y la función retorna False.
 Si no quedan sufijos nuevos por analizar, sufijos queda vacío y len(sufijos) es 0, al volver a evaluar la condición, el ciclo termina porque ya no hay sufijos pendientes, como no se encontró el sufijo vacío, el código es unívocamente decodificable y la función retorna True.
 
+Para calcular las longitudes maximas del codigo para que sea compacto simplemente recorro la lista de probabilidades y obtengo el redondeo hacia arriba de la operacion logr(1/Pi), guardando cada valor en una lista de longitudes maximas.
 
 La entropia en base r de la fuente la obtengo recorriendo la lista de probabilidades, multiplico cada Pi por el Logaritmo en base r de 1/Pi y voy acumulando en la variable entropia.
 La longitud media del codigo la obtengo recorriendo las listas de probabilidades y longitudes, multiplicando Pi * Li y haciendo la suma de cada operacion.
