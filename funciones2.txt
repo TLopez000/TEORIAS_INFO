@@ -41,3 +41,63 @@ Si el código es instantáneo, ninguna palabra código es prefijo propio de otra
 Si el código es UD, cualquier secuencia codificada se puede separar de una única manera en palabras código y recuperar sin ambigüedad la secuencia original. Sin embargo, puede ser necesario recibir más símbolos antes de decidir dónde termina cada palabra.
 Si el código es no singular, no repite palabras código: cada símbolo de la fuente tiene una palabra código distinta. Esto por sí solo no garantiza que las secuencias concatenadas se puedan decodificar sin ambigüedad; para eso se requiere que sea UD.
 Un código compacto es eficiente: asigna longitudes adecuadas a las probabilidades de los símbolos. Si no es compacto, algunas palabras código pueden ser más largas de lo necesario y aumentar la longitud media de los mensajes, lo que lo hace menos eficiente.
+
+
+SARDINAS PATERSON: 
+
+codigo = ["/+", "*", "+-", "-", "*/"]
+
+Paso 1: calcular el primer conjunto de sufijos
+Se inicializa el conjunto sufijos como un conjunto vacio. Luego, los dos
+for recorren las palabras palabra1 y palabra2 de codigo.
+Cuando palabra2 es prefijo de palabra1, se calcula resto quitando
+palabra2 de palabra1 y se añade resto a sufijos. Tambien se comprueba el
+caso contrario.
+
+Para palabra1 = "*/" y palabra2 = "*":
+resto = palabra1[len(palabra2):] = "/"
+sufijos = { "/" }
+
+Paso 2: calcular nuevos sufijos
+Se inicializan vistos y nuevos como conjuntos vacios. El while comienza
+porque len(sufijos) es mayor que cero y unideco es True.
+Se guarda "/" en vistos. Luego, sufijo recorre sufijos y palabra recorre
+codigo. Como palabra = "/+" empieza por sufijo = "/", se calcula:
+
+resto = palabra[len(sufijo):] = "+"
+nuevos = { "+" }
+sufijos = nuevos
+
+Paso 3: continuar el while
+Ahora sufijos = { "+" }. Al comparar sufijo = "+" con cada palabra de
+codigo, la palabra "+-" empieza por sufijo. Por tanto:
+
+resto = palabra[len(sufijo):] = "-"
+nuevos = { "-" }
+sufijos = nuevos
+
+Paso 4: aparece el sufijo vacio
+Ahora sufijos = { "-" }. Al comparar sufijo = "-" con palabra = "-",
+se quita toda la palabra y queda:
+
+resto = ""
+nuevos = { "" }
+sufijos = nuevos
+unideco = False
+
+Los conjuntos obtenidos son:
+
+S1 = { "/" }
+S2 = { "+" }
+S3 = { "-" }
+S4 = { "" }
+
+Como aparece el sufijo vacio, el codigo no es univocamente decodificable.
+La ambiguedad se puede comprobar con la cadena:
+
+*/+- = */ + +-
+*/+- = * + /+ + -
+
+Por lo tanto, esUD(codigo) retorna False.
+Ademas, no es instantaneo porque "*" es prefijo de "*/".
+

@@ -145,7 +145,7 @@ def genera_mensajeN(n, codigo, probabilidades):
 
 
 
-codigo = ["(]", "]", "[)", ")", "(["]
+codigo = ["/+", "*", "+-", "-", "*/"]
 probabilidades = [0.15,0.25,0.05,0.45,0.1]
 
 alfabeto = obtener_alfabeto(codigo)
