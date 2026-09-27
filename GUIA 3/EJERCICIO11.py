@@ -19,4 +19,4 @@ print(entropiafuente)
 print(longitudprom)
 
 #Un codigo necesita como minimo la informacion necesaria promedio para representar la fuente (su entropia o mas)
-#Cuanto mas eficiente sea el codigo, mas se acerca a la entropia
+#Cuanto mas eficiente sea el codigo, L mas se acerca a la entropia

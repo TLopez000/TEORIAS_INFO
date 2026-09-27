@@ -1,0 +1,43 @@
+Para obtener el alfabeto recorro las palabras codigo y añado cada simbolo que no se encuentre en el alfabeto.
+Para obtener las longitudes de cada palabra codigo, recorro cada palabra y guardo su longitud en una lista.
+
+La resolucion de la inecuacion de Kraft la hago obteniendo r (la cantidad de simbolos del alfabeto), luego itero con un For la cantidad de simbolos fuente Q (que es igual de la cantidad de longitudes) acumulando en SUMA r elevado a la inversa de cada longitud.
+
+Determinacion del tipo de codigo:
+- No singular : set(codigo) elimina las palabras repetidas; si la cantidad de palabras originales len(codigo) difiere de la cantidad de palabras del codigoSinRepeticiones, retorna falso (no es No singular), caso contrario retorna true (es No singular)
+- Instantaneo : Recorro cada palabra codigo con el primer For, y con el segundo For recorro las demas, verificando que no sea prefijo de ninguna de las siguientes (si alguna es prefijo, retorna falso, no es instantáneo)
+- UD: METODO SARDINAS-PATTERSON:
+Primero busco las palabras código que son prefijos de otras palabras código y guardo el sufijo restante en el conjunto sufijos.
+Luego, inicializo unideco en True y el conjunto vistos como vacío y entro al ciclo while.
+El while continúa mientras haya sufijos que analizar (len(sufijos) > 0) y unideco siga siendo True.
+En cada iteración inicializo el conjunto nuevos como vacío y guardo los sufijos actuales como ya vistos.
+Después comparo cada sufijo actual con cada palabra código. Si uno es prefijo del otro, guardo el sufijo restante en nuevos.
+Al finalizar las comparaciones, resto de nuevos los sufijos ya vistos, y los sufijos que quedan pasan a ser los actuales.
+Si aparece el sufijo vacío (""), significa que hay una ambigüedad en la decodificación: una misma cadena puede obtenerse de dos maneras.
+Entonces unideco pasa a False, al volver a evaluar la condición del while, el ciclo termina porque unideco ya no es True, y la función retorna False.
+Si no quedan sufijos nuevos por analizar, sufijos queda vacío y len(sufijos) es 0, al volver a evaluar la condición, el ciclo termina porque ya no hay sufijos pendientes, como no se encontró el sufijo vacío, el código es unívocamente decodificable y la función retorna True.
+
+
+La entropia en base r de la fuente la obtengo recorriendo la lista de probabilidades, multiplico cada Pi por el Logaritmo en base r de 1/Pi y voy acumulando en la variable entropia.
+La longitud media del codigo la obtengo recorriendo las listas de probabilidades y longitudes, multiplicando Pi * Li y haciendo la suma de cada operacion.
+
+Para determinar que un codigo es compacto, primero verifico que sea instantaneo (para que sea util y eficiente ademas de compacto) y luego, obtengo el alfabeto codigo (para obtener la base r) y las longitudes de las palabras codigo.
+Despues recorro la lista de longitudes y verifico que cada longitud de las palabras código sean menores o iguales al techo de la información en base r de la palabra (log(1/probabilidades[i],r)).
+-ceil redondea un float a su entero siguiente (si x = 1,2 redondea a x = 2), esto es porque debo comparar longitudes minimas necesarias para representar la palabra con las longitudes del codigo
+Si en algun momento alguna longitud es mayor al techo de la informacion de la palabra, cumple se vuelve false y corta el while, y la funcion retorna False.
+Caso contrario, i se hara igual a la cantidad de longitudes cortando el while, y la funcion retornara true.
+
+Para generar un mensaje de longitud N, itero N veces agregando un simbolo codificado a la lista mensajeN, este simbolo es seleccionado de manera aleatoria por la funcion random.choices, que elige una palabra de la lista codigo de forma aleatoria teniendo en cuenta las probabilidades de cada una.
+
+CONCLUSIONES:
+
+# Si la suma de Kraft es mayor que 1, no existe un código UD (y, por lo tanto, tampoco instantáneo) con esas longitudes.
+# Si la suma de Kraft es menor o igual que 1, existe al menos un código instantáneo con esas longitudes. Esto no garantiza que un código concreto con esas longitudes sea no singular, UD o instantáneo.
+# Todo código UD cumple la desigualdad de Kraft.
+# Para un código UD, la longitud media (en símbolos del alfabeto código) es mayor o igual que la entropía de la fuente expresada en base r: L_prom >= H_r.
+# Un código más eficiente tiene una longitud media más cercana a la entropía; los códigos óptimos se aproximan a ella
+
+Si el código es instantáneo, ninguna palabra código es prefijo propio de otra. Por eso se puede decodificar cada palabra al recibir sus símbolos, sin esperar a los siguientes, todo código instantáneo es UD.
+Si el código es UD, cualquier secuencia codificada se puede separar de una única manera en palabras código y recuperar sin ambigüedad la secuencia original. Sin embargo, puede ser necesario recibir más símbolos antes de decidir dónde termina cada palabra.
+Si el código es no singular, no repite palabras código: cada símbolo de la fuente tiene una palabra código distinta. Esto por sí solo no garantiza que las secuencias concatenadas se puedan decodificar sin ambigüedad; para eso se requiere que sea UD.
+Un código compacto es eficiente: asigna longitudes adecuadas a las probabilidades de los símbolos. Si no es compacto, algunas palabras código pueden ser más largas de lo necesario y aumentar la longitud media de los mensajes, lo que lo hace menos eficiente.

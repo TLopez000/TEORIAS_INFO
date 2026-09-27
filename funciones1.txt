@@ -3,12 +3,10 @@ Luego para obtener la probabilidad independiente, se inicializa una lista vacia,
 
 El calculo de la entropia sin memoria se realiza recorriendo la lista de probabilidades y acumulando prob * log2(1/prob) en cada iteracion.
 
-Para calcular la cantidad de informacion de un simbolo, se pasa la probabilidad y la funcion retorna 
-
 Para generar la extension N de la fuente sin memoria se comienza con dos listas auxiliares: una lista vacía de combinaciones y otra lista de probabilidades inicializada en 1. 
 En cada iteración (son N iteraciones, el primer ciclo For), con el segundo For, recorro cada combinacion existente y con el tercer For, se añade un simbolo del alfabeto a la combinacion actual y calcula su nueva probabilidad multiplicando la probabilidad anterior 
-por la del nuevo símbolo, al finalizar el 3er For obtuve todas las posibles combinaciones para la combinacion i guardades en nuevas_comb y nuevas_prob, por lo que paso a la siguiente combinacion.
-Una vez recorridas todas las combinaciones, guardo las combinaciones y sus probabilidades en las listas auxiliares.
+por la del nuevo símbolo, al finalizar el 3er For obtuve todas las posibles combinaciones para la combinacion i guardadas en nuevas_comb y nuevas_prob, por lo que paso a la siguiente combinacion.
+Una vez recorridas todas las combinaciones, guardo las combinaciones nuevas y sus probabilidades en las listas auxiliares.
 Finalizado el primer ciclo For, las combinaciones obtenidas en las listas auxiliares seran de tamaño N y las guardo en las listas sext y pext.
 
 Para generar una cadena N aleatoria, random.choices elije una lista de valores del alfabeto, ponderadas por sus probabilidades (con el [0] tomamos el primer valor de la lista)

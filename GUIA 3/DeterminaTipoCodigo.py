@@ -1,14 +1,9 @@
 
 def esNo_singular(codigo: list[str]):
-    for i in range(len(codigo)):
-        for j in range(i + 1, len(codigo)):
-            if codigo[i] == codigo[j]:
-                return False
+    codigoSinRepeticiones = len(set(codigo))
+    return len(codigo) == len(codigoSinRepeticiones)
 
-    return True
-
-#Elige una palabra código y verifica que ninguna de las siguientes sea igual a la elegida 
-#(si alguna es igual, retorna falso, no es singular)
+#Compara la cantidad de palabras originales con la cantidad de palabras sin repetir
 
 def esInstantaneo(codigo: list[str]):
     for i in range(len(codigo)):
