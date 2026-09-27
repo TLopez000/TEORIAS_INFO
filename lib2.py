@@ -132,6 +132,15 @@ def escompacto(codigo: list[str], probabilidades: list[float]):
  
     return cumple
 
+#Longitudes maximas para que el codigo sea compacto:
+
+def longitudes_maximas(probabilidades: list[float], r: int):
+    longitudes = []
+    for p in probabilidades:
+        l = math.ceil(-math.log(p, r))
+        longitudes.append(l)
+    return longitudes
+
 #GENERAR UN MENSAJE N
 
 def genera_mensajeN(n, codigo, probabilidades):
