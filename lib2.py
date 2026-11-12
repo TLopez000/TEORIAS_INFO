@@ -116,15 +116,15 @@ def long_media(probabilidades: list[float], longitudes: list[int]):
 
 def escompacto(codigo: list[str], probabilidades: list[float]):
     cumple = True
-    if esInstantaneo(codigo):
+    if esUD(codigo):
          longitudes = obtener_longitudes_codigo(codigo)
          alfabeto = obtener_alfabeto(codigo)
          r = len(alfabeto)
 
          i = 0
          while i<len(longitudes) and cumple:
-             techoinfo = math.log(1/probabilidades[i],r)
-             if longitudes[i] > math.ceil(techoinfo):
+             techoinfo = log(1/probabilidades[i],r)
+             if longitudes[i] > ceil(techoinfo):
                  cumple = False
              i+=1
     else:
@@ -154,8 +154,8 @@ def genera_mensajeN(n, codigo, probabilidades):
 
 
 
-codigo = ["/+", "*", "+-", "-", "*/"]
-probabilidades = [0.15,0.25,0.05,0.45,0.1]
+codigo = ["AB", "B", "CA", "C", "BC"]
+probabilidades = [1/9,1/3,1/9,1/3,1/9]
 
 alfabeto = obtener_alfabeto(codigo)
 print("Alfabeto codigo: ", alfabeto)
