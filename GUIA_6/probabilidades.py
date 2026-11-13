@@ -1,3 +1,5 @@
+#Probabilidad del simbolo de entrada
+#Se calcula tomando el total de apariciones del simbolo sobre el largo del mensaje
 def obtener_probabilidades_a_priori(entrada):
     alfabeto = []
     for simbolo in entrada:
@@ -8,6 +10,8 @@ def obtener_probabilidades_a_priori(entrada):
         for simbolo in alfabeto
     ]
     return alfabeto, probabilidades
+
+#Probabilidad del simbolo de salida (sin saber que simbolo entro)
 
 def obtener_probabilidades_salida(probabilidades_a_priori, matriz_canal):
     cantidad_entradas = len(matriz_canal)
