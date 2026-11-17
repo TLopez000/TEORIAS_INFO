@@ -1,8 +1,5 @@
-import sys
-from pathlib import Path
-carpeta_funciones = (Path(__file__).resolve().parent.parent / "segundo-parcial")
-sys.path.insert(0, str(carpeta_funciones))
-import funciones
+
+import lib as lib
 
 mensaje_recibido = "000010011111111011010111"
 matriz_canal = [
@@ -11,7 +8,7 @@ matriz_canal = [
 ]
 
 # a) Obtener la distribución óptima de entrada.
-capacidad, p_0 = funciones.estimar_capacidad_canal_binario(matriz_canal)
+capacidad, p_0 = lib.estimar_capacidad_canal_binario(matriz_canal)
 p_1 = 1 - p_0
 probabilidades_a_priori = [p_0, p_1]
 
@@ -19,9 +16,9 @@ print("Distribución óptima:")
 print(f"P(0) = {p_0:.4f}")
 print(f"P(1) = {p_1:.4f}")
 
-ruido = funciones.obtener_ruido(probabilidades_a_priori, matriz_canal)
-perdida = funciones.obtener_perdida(probabilidades_a_priori, matriz_canal)
-informacion_mutua = funciones.obtener_informacion_mutua(probabilidades_a_priori, matriz_canal)
+ruido = lib.obtener_ruido(probabilidades_a_priori, matriz_canal)
+perdida = lib.obtener_perdida(probabilidades_a_priori, matriz_canal)
+informacion_mutua = lib.obtener_informacion_mutua(probabilidades_a_priori, matriz_canal)
 
 print(f"H(A/B) = {ruido:.4f} bits")
 print(f"H(B/A) = {perdida:.4f} bits")
@@ -37,12 +34,12 @@ for i in range(0, len(mensaje_recibido), 8):
     matriz.append(fila)
 
 print("\nMatriz recibida:")
-funciones.mostrar_matriz(matriz)
+lib.mostrar_matriz(matriz)
 
 print("Se localizo un error en la segunda fila, tercera columna. Cambio ese bit de 1 a 0.")
 matriz[1][2] = 0
 print("\nMatriz con error corregido:")
-funciones.mostrar_matriz(matriz)
+lib.mostrar_matriz(matriz)
 
 print("\nLa matriz del canal indica que si se recibe C, se puede asegurar que se envio un 0. Por lo tanto, no puede ocurrir un error 0 -> 1")
 print("Sin embargo, la paridad indica que el bit recibido como 1 deberia haber sido 0. El mensaje no es compatible con este canal.")

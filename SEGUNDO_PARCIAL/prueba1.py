@@ -1,9 +1,4 @@
-# Para importar este archivo desde la guia:
-import sys
-from pathlib import Path
-carpeta_funciones = (Path(__file__).resolve().parent.parent / "segundo-parcial")
-sys.path.insert(0, str(carpeta_funciones))
-import funciones
+import lib as lib
 
 mensaje = "1100111001111001"
 codigo = ["11", "01", "00", "10"]
@@ -13,26 +8,26 @@ mensaje_codificado = "1100111001111001"
 # Cada palabra de dos bits representa un símbolo de la fuente.
 mensaje = [mensaje_codificado[i:i + 2] for i in range(0, len(mensaje_codificado), 2)]
 
-alfabeto, probabilidades = funciones.obtener_probabilidades_a_priori(mensaje)
-entropia = funciones.obtener_entropia_a_priori(probabilidades)
+alfabeto, probabilidades = lib.obtener_probabilidades_a_priori(mensaje)
+entropia = lib.obtener_entropia_a_priori(probabilidades)
 
 print("Alfabeto:", alfabeto)
 print("Probabilidades:", probabilidades)
 print(f"Entropía: {entropia:.4f} bits/símbolo")
-print(f"Longitud promedio del código: {funciones.calcular_longitud_media(codigo, probabilidades):.4f} bits/símbolo")
-print(f"Rendimiento de la fuente: {funciones.rendimiento(probabilidades, codigo, 2):.4f} bits/símbolo")
-print(f"Redundancia del código: {funciones.redundancia(probabilidades, codigo, 2):.4f} bits/símbolo")
+print(f"Longitud promedio del código: {lib.calcular_longitud_media(codigo, probabilidades):.4f} bits/símbolo")
+print(f"Rendimiento de la fuente: {lib.rendimiento(probabilidades, codigo, 2):.4f} bits/símbolo")
+print(f"Redundancia del código: {lib.redundancia(probabilidades, codigo, 2):.4f} bits/símbolo")
 
 print("\n--- Extensión de orden 3 ---")
 
 orden = 3
-extension, probabilidades_extension = funciones.obtener_extension(codigo, probabilidades, orden)
-codigos_extension = funciones.obtener_codigo_huffman(probabilidades_extension)
+extension, probabilidades_extension = lib.obtener_extension(codigo, probabilidades, orden)
+codigos_extension = lib.obtener_codigo_huffman(probabilidades_extension)
 
-print(f"Entropia de la fuente de la extensión: {funciones.obtener_entropia_a_priori(probabilidades_extension):.4f} bits/símbolo")
-print(f"Longitud promedio del código de la extensión: {funciones.calcular_longitud_media(codigos_extension, probabilidades_extension):.4f} bits/símbolo")
-print(f"Rendimiento de la fuente de la extensión: {funciones.rendimiento(probabilidades_extension, codigos_extension, 2):.4f} bits/símbolo")
-print(f"Redundancia del código de la extensión: {funciones.redundancia(probabilidades_extension, codigos_extension, 2):.4f} bits/símbolo")
+print(f"Entropia de la fuente de la extensión: {lib.obtener_entropia_a_priori(probabilidades_extension):.4f} bits/símbolo")
+print(f"Longitud promedio del código de la extensión: {lib.calcular_longitud_media(codigos_extension, probabilidades_extension):.4f} bits/símbolo")
+print(f"Rendimiento de la fuente de la extensión: {lib.rendimiento(probabilidades_extension, codigos_extension, 2):.4f} bits/símbolo")
+print(f"Redundancia del código de la extensión: {lib.redundancia(probabilidades_extension, codigos_extension, 2):.4f} bits/símbolo")
 
 # Explicaciones 
 # a) La entropía de la fuente se calculó en base a las frecuencias relativas de los símbolos tomados de a 2, 

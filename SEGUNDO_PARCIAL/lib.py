@@ -1,10 +1,3 @@
-# Para importar este archivo desde la guia:
-# import sys
-# from pathlib import Path
-# carpeta_funciones = (Path(__file__).resolve().parent.parent / "segundo-parcial")
-# sys.path.insert(0, str(carpeta_funciones))
-# import funciones
-
 import math
 
 def mostrar_matriz(matriz):
@@ -319,6 +312,82 @@ def obtener_extension(alfabeto, probabilidades, orden):
         probabilidades_extension = nuevas_probabilidades
     return extension, probabilidades_extension
 
+def shannon_fano(probabilidades):
+    codigos = [""] * len(probabilidades)
+
+    # Ordenamos los indices de mayor a menor probabilidad
+    indices = list(range(len(probabilidades)))
+    indices.sort(key=lambda i: probabilidades[i], reverse=True)
+
+    # Grupos que todavía tenemos que dividir
+    grupos = [indices]
+    while len(grupos) > 0:
+        grupo = grupos.pop(0)
+        # Si queda un solo simbolo, no se puede dividir mas
+        if len(grupo) <= 1:
+            continue
+        # Calculamos la probabilidad total del grupo
+        total = 0
+        for i in grupo:
+            total += probabilidades[i]
+        # Buscamos el mejor punto de corte
+        acumulado = 0
+        mejor_corte = 1
+        menor_diferencia = float("inf")
+        for k in range(1, len(grupo)):
+            acumulado += probabilidades[grupo[k - 1]]
+            suma_izquierda = acumulado
+            suma_derecha = total - acumulado
+            diferencia = abs(suma_izquierda - suma_derecha)
+            if diferencia < menor_diferencia:
+                menor_diferencia = diferencia
+                mejor_corte = k
+        # Dividimos el grupo
+        izquierda = grupo[:mejor_corte]
+        derecha = grupo[mejor_corte:]
+        # Asignamos los bits
+        for i in izquierda:
+            codigos[i] += "0"
+        for i in derecha:
+            codigos[i] += "1"
+        # Estos grupos después deben volver a dividirse
+        grupos.append(izquierda)
+        grupos.append(derecha)
+    return codigos
+
+
+##  RLC ##
+
+def comprimir_RLC(mensaje):
+    if not mensaje:
+        return bytearray()
+
+    resultado = bytearray()
+    contador = 1
+    simbolo_anterior = mensaje[0]
+
+    for simbolo in mensaje[1:]:
+        if simbolo == simbolo_anterior and contador < 255:
+            contador += 1
+        else:
+            # Primero guardamos el simbolo y despues el contador
+            
+            # Guardamos el ASCII del simbolo
+            resultado.append(ord(simbolo_anterior))
+
+            # Guardamos la cantidad
+            resultado.append(contador)
+
+            simbolo_anterior = simbolo
+            contador = 1
+
+    # Agregamos el ultimo grupo
+    resultado.append(ord(simbolo_anterior))
+    resultado.append(contador)
+
+    return resultado
+
+
 def obtener_codigo_huffman(probabilidades):
     codigos = ["" for _ in probabilidades]
 
@@ -376,3 +445,18 @@ def extension_verifica_Shannon(probabilidades, palabras_codigo, N = 1):
     longitud_media = calcular_longitud_media(palabras_codigo, probabilidades_extension)
 
     return (entropia <= longitud_media / N) and (longitud_media / N <= entropia + 1 / N)
+
+def imprime_matriz(alf_entrada, alf_salida, matriz):
+    print("    " + "   ".join(alf_salida))
+
+    for i in range(len(alf_entrada)):
+        print(alf_entrada[i] + "   " + "   ".join(str(x) for x in matriz[i]))
+        
+def construye_matriz_mensaje(mensaje_recibido):
+    matriz = []
+    for i in range(0, len(mensaje_recibido), 8):
+        fila = []
+        for bit in mensaje_recibido[i:i + 8]:
+            fila.append(int(bit))
+        matriz.append(fila)
+    return matriz
