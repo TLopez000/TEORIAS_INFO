@@ -29,12 +29,12 @@ Finalmente, la información mutua I(A;B) permite determinar cuánta información
 EJ DE REGLA DE DECIOSION MAX:
 entrada = "10100000101011101001111110011001"
 salida =  "QQPQQPPQQQPQRRRQSPQSQRQSQQPSQQPP"
-# por la regla de maxima decision, se sabe que si se emitio R o S, entro un 1.
-# cuando se recibe Q o P, se decide 0 ya que es el que tiene max probabilidad a posteriori.
-# Un 1 transmitido puede producir Q P R S
-# Un 0 transmitido solo produce Q P
-# Un 0 transmitido nunca se recupera como 1, no puede producir R S
-# Un 1 transmitido puede recuperarse incorrectamente como 0 si produce Q o P
+por la regla de maxima decision, se sabe que si se emitio R o S, entro un 1.
+cuando se recibe Q o P, se decide 0 ya que es el que tiene max probabilidad a posteriori.
+Un 1 transmitido puede producir Q P R S
+Un 0 transmitido solo produce Q P
+Un 0 transmitido nunca se recupera como 1, no puede producir R S
+Un 1 transmitido puede recuperarse incorrectamente como 0 si produce Q o P
 
 mensaje decodificado : "000000000000011101001010100010000"
 
