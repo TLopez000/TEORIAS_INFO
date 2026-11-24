@@ -1,0 +1,32 @@
+ a) La entropía de la fuente se calculó en base a las probabilidades independientes de cada simbolo.
+b) El código binario óptimo se hizo mediante la codificación de Huffman, que sigue este algoritmo:
+ 1. Se inicia un árbol binario vacío con aristas ponderadas. Para hijos izquierdos, las aristas se ponderan con 0 y, para hijos derechos, se ponderan con 1. 
+Mientras el árbol no contenga a todo el alfabeto:    
+a. Ordenar alfabeto según probabilidades    
+b. Unificar los 2 símbolos o grupos de símbolos menos probables y sumar sus probabilidades.    
+c. Crear un nodo vacío cuyos hijos sean éstos 2 grupos de símbolos. El hijo izquierdo será el menos probable. 
+3. La codificación de cada símbolo será la concatenación de los 1s y 0s recorridos del árbol desde la raíz hasta donde esté alojado el símbolo. 
+
+c) Para obtener los codigos optimos de las extensiones, se utilizo una funcion implementada para el parcial 1 para generar las extensiones y acto seguido, los codigos fueron calculados con el algoritmo de Huffman explicado en el inciso B.
+
+d) La longitud media es el promedio ponderado por la probabilidad de la 
+longitud de los códigos. 
+El rendimiento se calculó como el cociente entre la entropía de la fuente y la longitud media. Y la redundancia es 1 menos el rendimiento.
+
+# Conclusiones 
+Se observa que, a medida que aumenta el orden de la extensión, el rendimiento aumenta y la redundancia disminuye. 
+En otras palabras, la longitud media se acerca cada vez mas a la entropia.
+
+Para la fuente original se obtuvo una entropía de 0.72 bits/símbolo y una longitud media de 1 bit/símbolo, lo que produce un rendimiento de aproximadamente 72 %.
+Para la extensión de orden 2 se obtuvo una entropía de 1.44 bits y una longitud media de 1.56 bits por palabra de dos símbolos, equivalente a 0.78 bits/símbolo, con un rendimiento cercano al 92 %. 
+Para la extensión de orden 3 se obtuvo una entropía de 2.16 bits y una longitud media de 2.18 bits por palabra de tres símbolos, equivalente a aproximadamente 0.728 bits/símbolo, con un rendimiento cercano al 99.16%.
+
+El Primer Teorema de Shannon enuncia que la longitud media de una extensión está acotada por su entropía:
+H_r(S^n) <= L_n <= H_r(S^n)+1
+
+Esto demuestra que la extensión permite acercar la longitud media del código al límite teórico establecido por Shannon, aumentando la eficiencia al 99.16% y reduciendo la redundancia al 0.0083%.
+
+En este caso, las 3 codificaciones cumplen el Primer Teorema de Shannon, donde la H(Sn) es menor o igual a la longitud media Ln, donde la extension de orden 3 es la que logra un mayor rendimiento.
+
+Sin embargo, un valor de n mayor incrementa considerablemente la cantidad de combinaciones posibles y, por lo tanto, la complejidad del código y su decodificación.
+

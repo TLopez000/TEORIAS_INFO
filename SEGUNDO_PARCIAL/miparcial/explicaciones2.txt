@@ -1,0 +1,56 @@
+a) Para obtener la distribucion optima del primer canal:
+Se probaron distribuciones de entrada de la forma P(0)=p y P(1)=1-p, variando p entre 0 y 1 con un paso de 0.0001. 
+Para cada distribución se calculó la información mutua y se conservó aquella que produjo el mayor valor.
+P(0)=0.5; P(1)=0.5.
+
+b) Para calcular la equivocación H(A/B), primero se obtuvieron las probabilidades de salida de cada canal y luego las probabilidades a posteriori mediante Bayes. 
+A partir de ellas se calculó la entropía correspondiente a cada salida y se realizó un promedio ponderado por las probabilidades de salida.
+El ruido o equivocacion representa la incertidumbre promedio que queda sobre la entrada después de conocer la salida. 
+
+Para calcular la pérdida H(B/A), se obtuvo la entropía de cada fila de la matriz del canal y se ponderó por la probabilidad de entrada correspondiente. 
+
+La pérdida H(B/A), en cambio, representa la incertidumbre sobre el resultado recibido conociendo el símbolo transmitido.
+
+La información mutua se calculó como I(A,B) = H(A) - H(A/B), obteniendo 1 bit. Como se utilizó la distribución óptima, este valor coincide con la capacidad estimada.
+
+Para el canal 2, la distribucion de entrada utilizada para el calculo de las metricas se obtuvo como la distribucion de salida del canal 1, ya que estan en serie.
+
+c) Para calcular la matriz compuesta se multiplican las matrices de ambos canales: M(AC) = M(AB) * M(BC)
+La funcion calcula la matriz compuesta por el canal 1 M(AB) y el canal 2 M(BC).
+Luego las metricas fueron obtenidas utilizando la distribucion de entrada del canal 1, que es la distribucion de entrada del canal compuesto.
+
+d) La probabilidad de error de cada canal fue obtenida de la formula: P(error) = 1 - Sumj( máximoᵢ [P(aᵢ) · P(bⱼ | aᵢ)]), 
+Para cada salida se elige la entrada con mayor probabilidad conjunta P(aᵢ, bⱼ). Se suman esas probabilidades de acierto y al final se resta el resultado a 1.
+
+CONCLUSIONES
+
+La distribución optima obtenida fue (P(0)=0.5) y (P(1)=0.5). Con ella, la capacidad estimada del primer canal es de 1 bit por uso.
+
+Primer canal: 
+equivocación = 0 bits
+pérdida = 0.9406 bits
+información mutua = 1 bit
+P(error) = 0
+La equivocación nula significa que, conociendo la salida, se puede identificar con certeza cuál fue la entrada (Si se observa F o H se sabe que entro un 0, y si se observan G o I se sabe que entro un 1). 
+La pérdida no es nula porque una misma entrada puede producir distintas salidas (0 puede producir F o H y 1 puede producir G o I).
+Es un canal sin ruido.
+
+Segundo canal: 
+equivocación = 0.9406 bits
+pérdida = 0 bits
+información mutua = 1 bit
+P(error) = 0.4
+La pérdida nula se debe a que el segundo canal es determinista: cada entrada produce una única salida. 
+Sin embargo, diferentes entradas pueden producir la misma salida, por lo que no siempre es posible identificar cuál de las cuatro entradas se recibió.
+(F y G solo producen 1, y H e I solo producen 0).
+
+Canal compuesto:
+equivocación = 0 bits
+pérdida = 0 bits
+información mutua = 1 bit
+P(error) = 0
+En este caso, la salida final permite recuperar sin ambigüedad el símbolo original, ya que no hay equivocacion ni perdida.
+
+En resumen:
+El primer canal permite identificar exactamente el símbolo de entrada, aunque introduce incertidumbre sobre cuál salida se produce. El segundo canal, no permite distinguir todas sus entradas y por eso su probabilidad de error es 0.4. Sin embargo, en la conexión en serie, las entradas que el segundo canal agrupa corresponden a la misma entrada original. Por eso el canal compuesto conserva la información del símbolo inicial y su probabilidad de error resulta nula.
+
